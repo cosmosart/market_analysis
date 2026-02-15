@@ -144,9 +144,9 @@ class DataPreprocessor:
         df = data.copy()
         
         if method == 'ffill':
-            df = df.fillna(method='ffill')
+            df = df.ffill()
         elif method == 'bfill':
-            df = df.fillna(method='bfill')
+            df = df.bfill()
         elif method == 'interpolate':
             df = df.interpolate(method='linear')
         elif method == 'drop':
