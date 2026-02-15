@@ -2,8 +2,8 @@
 import sys
 from pathlib import Path
 
-# Add parent directory to path
-sys.path.append(str(Path(__file__).parent.parent))
+# Add project root to path
+sys.path.append(str(Path(__file__).parent))
 
 from src.database.connection import db
 import config

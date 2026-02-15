@@ -7,8 +7,8 @@ from datetime import datetime, timedelta
 import sys
 from pathlib import Path
 
-# Add parent directory to path for imports
-sys.path.append(str(Path(__file__).parent.parent))
+# Add project root to path for imports
+sys.path.append(str(Path(__file__).parent))
 
 from src.database.connection import db
 from src.ml.volatility import VolatilityMonitor
@@ -70,7 +70,7 @@ def get_stock_performance(symbol: str, days: int = 30):
         SELECT date, close, volume
         FROM daily_data
         WHERE symbol = %s
-        AND date >= CURRENT_DATE - INTERVAL '%s days'
+        AND date >= CURRENT_DATE - CAST(%s || ' days' AS INTERVAL)
         ORDER BY date
     """
     results = db.execute_query(query, (symbol, days))
@@ -85,7 +85,7 @@ def get_volatility_data(exchange: str = None, days: int = 7):
             FROM volatility_alerts va
             JOIN stock_info si ON va.symbol = si.symbol
             WHERE si.exchange = %s
-            AND va.alert_date >= CURRENT_DATE - INTERVAL '%s days'
+            AND va.alert_date >= CURRENT_DATE - CAST(%s || ' days' AS INTERVAL)
             ORDER BY va.alert_date DESC, va.volatility_score DESC
         """
         results = db.execute_query(query, (exchange, days))
@@ -94,7 +94,7 @@ def get_volatility_data(exchange: str = None, days: int = 7):
             SELECT va.*, si.company_name, si.exchange
             FROM volatility_alerts va
             JOIN stock_info si ON va.symbol = si.symbol
-            WHERE va.alert_date >= CURRENT_DATE - INTERVAL '%s days'
+            WHERE va.alert_date >= CURRENT_DATE - CAST(%s || ' days' AS INTERVAL)
             ORDER BY va.alert_date DESC, va.volatility_score DESC
         """
         results = db.execute_query(query, (days,))
