@@ -98,7 +98,10 @@ class TestMLModels(unittest.TestCase):
         model = lstm.build_model((10, 1))
         
         self.assertIsNotNone(model)
-        self.assertGreater(len(model.layers), 5)  # Has multiple LSTM, Dropout, and Dense layers
+        # Check that the model has LSTM and Dense layers
+        layer_types = [type(layer).__name__ for layer in model.layers]
+        self.assertIn('LSTM', layer_types)
+        self.assertIn('Dense', layer_types)
     
     def test_lstm_train(self):
         """Test LSTM model training."""

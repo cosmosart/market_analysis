@@ -200,7 +200,7 @@ class ModelEvaluator:
         """
         print(f"\n{model_name} Performance Metrics:")
         print(f"{'='*50}")
-        print(f"Mean Squared Error (MSE):  {metrics['MSE']:.6f}")
+        print(f"Mean Squared Error (MSE): {metrics['MSE']:.6f}")
         print(f"Root Mean Squared Error (RMSE): {metrics['RMSE']:.6f}")
         print(f"Mean Absolute Error (MAE): {metrics['MAE']:.6f}")
         print(f"R² Score: {metrics['R2']:.6f}")
