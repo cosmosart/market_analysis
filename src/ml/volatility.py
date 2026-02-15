@@ -232,7 +232,7 @@ class VolatilityMonitor:
                 SELECT va.*, si.company_name, si.exchange
                 FROM volatility_alerts va
                 JOIN stock_info si ON va.symbol = si.symbol
-                WHERE va.alert_date >= CURRENT_DATE - CAST(%s || ' days' AS INTERVAL)
+                WHERE va.alert_date >= CURRENT_DATE - INTERVAL '1 day' * %s
                 ORDER BY va.alert_date DESC, va.volatility_score DESC
             """
             results = db.execute_query(query, (days,))
